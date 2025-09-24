@@ -1,0 +1,211 @@
+/* General Reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Landing Page Layout */
+.landing-page {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Dropdown Menu */
+.web-dropdown-menu {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.web-dropdown-button {
+    background-color: #333;
+    color: white;
+    border: none;
+    min-width: 160px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.web-dropdown-button:hover {
+    background-color: #555;
+    transform: scale(1.05);
+}
+
+.web-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    right: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1;
+}
+
+.web-dropdown-content a {
+    color: #333;
+    text-decoration: none;
+    display: block;
+    padding: 10px 16px;
+}
+
+.web-dropdown-content a:hover {
+    background-color: #eee;
+}
+
+.web-dropdown-menu:hover .web-dropdown-content {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Landing Content */
+.text-and-poster {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.poster img {
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.text {
+    max-width: 600px;
+    text-align: left;
+}
+
+.text h1 {
+    font-size: 36px;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+.text p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+/* Buttons */
+.landing-buttons {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.large-button, .small-button {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    padding: 15px 30px;
+    border-radius: 8px;
+    display: inline-block;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 250px;
+}
+
+.large-button {
+    background-color: #333;
+}
+
+.large-button:hover {
+    background-color: #555;
+}
+
+.small-button {
+    background-color: #666;
+    font-size: 16px;
+    padding: 12px 25px;
+}
+
+.small-button:hover {
+    background-color: #888;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    /* Adjust layout for small screens */
+    .text-and-poster {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .poster img {
+        max-width: 90%;
+    }
+
+    .text {
+        text-align: center;
+        padding: 0 10px;
+    }
+
+    .text h1 {
+        font-size: 28px;
+    }
+
+    .text p {
+        font-size: 16px;
+    }
+
+    /* Adjust buttons for small screens */
+    .landing-buttons {
+        gap: 10px;
+    }
+
+    .large-button, .small-button {
+        width: 90%;
+        max-width: none;
+    }
+
+    /* Dropdown menu adjustments */
+    .web-dropdown-menu {
+        top: 10px;
+        right: 10px;
+    }
+
+    .web-dropdown-button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    .web-dropdown-content a {
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Fine-tuning for very small screens */
+    .text h1 {
+        font-size: 24px;
+    }
+
+    .text p {
+        font-size: 14px;
+    }
+
+    .poster img {
+        max-width: 100%;
+    }
+}

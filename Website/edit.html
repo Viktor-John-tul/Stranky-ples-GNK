@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Website Texts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* You can reuse your .login-container styles here */
+        body {
+            background: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+        .edit-container {
+            width: 350px;
+            margin: 100px auto;
+            padding: 30px 25px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .edit-container h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .edit-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .edit-container input[type="text"],
+        .edit-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 18px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .edit-container button {
+            width: 100%;
+            padding: 10px;
+            background: #0078d7;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .edit-container button:hover {
+            background: #005fa3;
+        }
+        #saveStatus {
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="edit-container">
+      <h2>Edit Website Texts</h2>
+      <form id="editTextsForm">
+        <label>Main Text</label>
+        <textarea id="editMainText"></textarea>
+        <label>Date</label>
+        <input type="text" id="editDate">
+        <label>Place</label>
+        <input type="text" id="editPlace">
+        <label>Dress Code</label>
+        <input type="text" id="editDresscode">
+        <label>Ticket Info</label>
+        <input type="text" id="editTicketInfo">
+        <button type="submit">Save Changes</button>
+      </form>
+      <div id="saveStatus"></div>
+    </div>
+    <script>
+        // Redirect to login if not logged in
+        if (sessionStorage.getItem('isAdmin') !== 'true') {
+            window.location.href = "admin.html";
+        }
+
+        // Load current texts
+        fetch('content.json')
+          .then(res => res.json())
+          .then(data => {
+            document.getElementById('editMainText').value = data.landing.mainText;
+            document.getElementById('editDate').value = data.landing.date;
+            document.getElementById('editPlace').value = data.landing.place;
+            document.getElementById('editDresscode').value = data.landing.dresscode;
+            document.getElementById('editTicketInfo').value = data.landing.ticketInfo;
+          });
+
+        // Save changes (requires server-side script)
+        document.getElementById('editTextsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const updated = {
+              landing: {
+                mainText: document.getElementById('editMainText').value,
+                date: document.getElementById('editDate').value,
+                place: document.getElementById('editPlace').value,
+                dresscode: document.getElementById('editDresscode').value,
+                ticketInfo: document.getElementById('editTicketInfo').value
+              }
+            };
+            fetch('save_content.php', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify(updated)
+            })
+            .then(res => res.ok ? "Saved!" : "Error saving.")
+            .then(msg => document.getElementById('saveStatus').textContent = msg);
+        });
+    </script>
+</body>
+</html>

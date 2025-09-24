@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maturitní ples GNK</title>
+    <link rel="stylesheet" type="text/css" href="./css/qrcodes.css">
+</head>
+<body>
+    <div class="web-dropdown-menu">
+        <button class="web-dropdown-button">Menu</button>
+        <div class="web-dropdown-content">
+            <a href="index.html" id="link1">Informace</a>
+            <a href="Order.html" id="link2">Koupit lístky</a>
+            <a href="QRCodes.html" id="link3">QR kódy tříd</a>
+            <a href="https://www.kavalirka.cz" id="external-link">Stránky školy</a>
+        </div>
+    </div>
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="sidebar">
+        <h2>Třídy</h2>
+        <ul>
+            <li class="main-section"><a href="#Primy">Primy</a></li>
+            <li class="main-section"><a href="#Sekundy">Sekundy</a></li>
+            <li class="main-section"><a href="#Tercie">Tercie</a></li>
+            <li class="main-section"><a href="#Kvarty">Kvarty</a></li>
+            <li class="main-section"><a href="#Kvinty">Kvinty</a></li>
+            <li class="main-section"><a href="#Sexty">Sexty</a></li>
+            <li class="main-section"><a href="#Septimy">Septimy</a></li>
+            <li class="main-section"><a href="#Oktávy">Oktávy</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <h1>Lístky na ples Gymnázia Nad Kavalírkou</h1>
+            <p>Na stránce najdete QR kódy na zaplacení lístků.<br><br> Do zprávy pro příjemce napište prosím zprávu v tomto formátu: <br> Vaše jméno nebo jméno člověka, který bude lístky vyzvedávat; počet lístků na stání; počet lístků na sezení <br> Přiklad: Viktor John, 2, 4<br><br> Pokud máte k prodeji nějaké další otázky ozvěte se na tento e-mail: john.viktor@kavalirka.cz</p>
+        </div>
+
+        <!-- Separate Sections for Images -->
+        <div id="Primy" class="section-wrapper">
+            <h2>Primy</h2>
+            <div class="gallery">
+                <div id="image1" class="gallery-item" onclick="openModal('image1')"><h3>1.A</h3><img src="./QRCodes/1.A.png" alt="QR Code 1"></div>
+                <div id="image2" class="gallery-item" onclick="openModal('image2')"><h3>1.B</h3><img src="./QRCodes/1.B.png" alt="QR Code 2"></div>
+            </div>
+        </div>
+
+        <div id="Sekundy" class="section-wrapper">
+            <h2>Sekundy</h2>
+            <div  class="gallery">
+                <div id="image3" class="gallery-item" onclick="openModal('image3')"><h3>2.A</h3><img src="./QRCodes/2.A.png" alt="QR Code 3"></div>
+                <div id="image4" class="gallery-item" onclick="openModal('image4')"><h3>2.B</h3><img src="./QRCodes/2.B.png" alt="QR Code 4"></div>
+                <div id="image5" class="gallery-item" onclick="openModal('image5')"><h3>2.C</h3><img src="./QRCodes/2.C.png" alt="QR Code 5"></div>
+            </div>
+        </div>
+
+        <div id="Tercie" class="section-wrapper">
+            <h2>Tercie</h2>
+            <div class="gallery">
+                <div id="image6" class="gallery-item" onclick="openModal('image6')"><h3>3.A</h3><img src="./QRCodes/3.A.png" alt="QR Code 6"></div>
+                <div id="image7" class="gallery-item" onclick="openModal('image7')"><h3>3.B</h3><img src="./QRCodes/3.B.png" alt="QR Code 7"></div>
+            </div>
+        </div>
+
+        <div id="Kvarty" class="section-wrapper">
+            <h2>Kvarty</h2>
+            <div class="gallery">
+                <div id="image8" class="gallery-item" onclick="openModal('image8')"><h3>4.A</h3><img src="./QRCodes/4.A.png" alt="QR Code 8"></div>
+                <div id="image9" class="gallery-item" onclick="openModal('image9')"><h3>4.B</h3><img src="./QRCodes/4.B.png" alt="QR Code 9"></div>
+            </div>
+        </div>
+
+        <div id="Kvinty" class="section-wrapper">
+            <h2>Kvinty</h2>
+            <div class="gallery">
+                <div id="image10" class="gallery-item" onclick="openModal('image10')"><h3>5.A</h3><img src="./QRCodes/5.A.png" alt="QR Code 10"></div>
+                <div id="image11" class="gallery-item" onclick="openModal('image11')"><h3>5.B</h3><img src="./QRCodes/5.B.png" alt="QR Code 11"></div>
+            </div>
+        </div>
+
+        <div id="Sexty" class="section-wrapper">
+            <h2>Sexty</h2>
+            <div class="gallery">
+                <div id="image12" class="gallery-item" onclick="openModal('image12')"><h3>6.A</h3><img src="./QRCodes/6.A.png" alt="QR Code 12"></div>
+                <div id="image13" class="gallery-item" onclick="openModal('image13')"><h3>6.B</h3><img src="./QRCodes/6.B.png" alt="QR Code 13"></div>
+            </div>
+        </div>
+
+        <div id="Septimy" class="section-wrapper">
+            <h2>Septimy</h2>
+            <div class="gallery">
+                <div id="image14" class="gallery-item" onclick="openModal('image14')"><h3>7.A</h3><img src="./QRCodes/7.A.png" alt="QR Code 14"></div>
+                <div id="image15" class="gallery-item" onclick="openModal('image15')"><h3>7.B</h3><img src="./QRCodes/7.B.png" alt="QR Code 15"></div>
+            </div>
+        </div>
+
+        <div id="Oktávy"class="section-wrapper">
+            <h2>Oktávy</h2>
+            <div class="gallery">
+                <div id="image16" class="gallery-item" onclick="openModal('image16')"><h3>8.A</h3><img src="./QRCodes/8.A.png" alt="QR Code 16"></div>
+                <div id="image17" class="gallery-item" onclick="openModal('image17')"><h3>8.B</h3><img src="./QRCodes/8.B.png" alt="QR Code 17"></div>
+                <div id="image18" class="gallery-item" onclick="openModal('image18')"><h3>8.C</h3><img src="./QRCodes/8.C.png" alt="QR Code 18"></div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <!-- Modal for Enlarged Image -->
+    <div id="modal" class="modal" onclick="closeModal()">
+        <div class="close-btn" onclick="closeModal()">X</div>
+        <img id="modalImage" src="" alt="Enlarged Image">
+    </div>
+
+    <script>
+
+        // Get the current page's URL
+        const currentURL = window.location.href;
+
+        // Define the mapping of page names to their links
+        const pageLinks = {
+            "link1": "code1.html",
+            "link2": "code2.html",
+            "link3": "code3.html",
+            "external-link": "https://www.example.com"
+        };
+
+        // Highlight the current page and disable the corresponding link
+        for (const [id, url] of Object.entries(pageLinks)) {
+            const link = document.getElementById(id);
+            if (currentURL.includes(url)) {
+                link.classList.add("disabled");
+                break;
+            }
+        }
+        // Prevent dropdown click from affecting other clicks like sidebar toggle
+        document.querySelector('.web-dropdown-button').addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevent the click event from propagating to the document
+            const dropdownContent = document.querySelector('.web-dropdown-content');
+            dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Close dropdown if clicked outside
+        document.addEventListener('click', function(e) {
+            const dropdownContent = document.querySelector('.web-dropdown-content');
+            const dropdownMenu = document.querySelector('.web-dropdown-menu');
+            if (!dropdownMenu.contains(e.target)) {
+                dropdownContent.style.display = 'none'; // Hide dropdown when clicking outside
+            }
+        });
+
+
+        (function redirectToHttps() {
+            if (window.location.hostname === "kavalirka.store" && window.location.protocol !== "https:") {
+                window.location.href = "https://kavalirka.store" + window.location.pathname + window.location.search;
+            }
+        })();
+        
+        function openModal(imageId) {
+            var image = document.getElementById(imageId).getElementsByTagName('img')[0];
+            var modalImage = document.getElementById("modalImage");
+            modalImage.src = image.src;
+            var modal = document.getElementById("modal");
+            modal.classList.add("show");
+        }
+
+        function closeModal() {
+            var modal = document.getElementById("modal");
+            modal.classList.remove("show");
+        }
+
+        // Close sidebar when clicked outside
+        document.addEventListener('click', function(e) {
+            const sidebar = document.querySelector('.sidebar');
+            const toggleButton = document.querySelector('.sidebar-toggle');
+            if (!sidebar.contains(e.target) && !toggleButton.contains(e.target)) {
+                sidebar.classList.remove('active');
+                document.querySelector('.main-content').classList.remove('shifted');
+                toggleButton.style.display = 'block'; // Show the button again when sidebar is closed
+            }
+        });
+
+        // Toggle sidebar and hide/show the button
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            sidebar.classList.toggle('active');
+            mainContent.classList.toggle('shifted');
+            
+            // Hide the button when sidebar is open
+            if (sidebar.classList.contains('active')) {
+                toggleButton.style.display = 'none';
+            } else {
+                toggleButton.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
