@@ -1,0 +1,1 @@
+# Stranky-ples-GNK
