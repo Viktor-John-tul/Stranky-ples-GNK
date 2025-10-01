@@ -32,65 +32,8 @@
 
     <div class="step" id="step2">
         <h1>Vyberte třídu</h1>
-        <div class="scrollable-list">
-            <div class="class-group">
-                <h2>Primy</h2>
-                <div class="class-buttons">
-                    <button onclick="selectClass('1.A')">1.A</button>
-                    <button onclick="selectClass('1.B')">1.B</button>
-                </div>
-            </div>
-            <div class="class-group">
-                <h2>Sekundy</h2>
-                <div class="class-buttons">
-                    <button onclick="selectClass('2.A')" widht=30%>2.A</button>
-                    <button onclick="selectClass('2.B')" widht=30%>2.B</button>
-                    <button onclick="selectClass('2.C')" widht=30%>2.C</button>
-                </div>
-            </div>
-            <div class="class-group">
-                <h2>Tercie</h2>
-                <div class="class-buttons">
-                    <button onclick="selectClass('3.A')">3.A</button>
-                    <button onclick="selectClass('3.B')">3.B</button>
-                </div>
-            </div>
-            <div class="class-group">
-                <h2>Kvarty</h2>
-                <div class="class-buttons">
-                    <button onclick="selectClass('4.A')">4.A</button>
-                    <button onclick="selectClass('4.B')">4.B</button>
-                </div>
-            </div>
-            <div class="class-group">
-                <h2>Kvinty</h2>
-                <div class="class-buttons">
-                    <button onclick="selectClass('5.A')">5.A</button>
-                    <button onclick="selectClass('5.B')">5.B</button>
-                </div>
-            </div>
-            <div class="class-group">
-                <h2>Sexty</h2>
-                <div class="class-buttons">
-                    <button onclick="selectClass('6.A')">6.A</button>
-                    <button onclick="selectClass('6.B')">6.B</button>
-                </div>
-            </div>
-            <div class="class-group">
-                <h2>Septimy</h2>
-                <div class="class-buttons">
-                    <button onclick="selectClass('7.A')">7.A</button>
-                    <button onclick="selectClass('7.B')">7.B</button>
-                </div>
-            </div>
-            <div class="class-group">
-                <h2>Oktávy</h2>
-                <div class="class-buttons-smaller">
-                    <button onclick="selectClass('8.A')">8.A</button>
-                    <button onclick="selectClass('8.B')">8.B</button>
-                    <button onclick="selectClass('8.C')">8.C</button>
-                </div>
-            </div>
+        <div class="scrollable-list" id="classContainer">
+            <!-- Classes will be dynamically generated here -->
         </div>
         <button class="medium-button" onclick="goBack1()">Zpět</button>
     </div>
@@ -174,9 +117,77 @@
     <script>
         let selectedOption = null;
         let selectedClass = null;
+        let classConfig = null;
 
         const sittingPrice = 480;
         const standingPrice = 350;
+
+        // Load class configuration from content.json
+        function loadClassConfiguration() {
+            fetch('content.json')
+                .then(response => response.json())
+                .then(data => {
+                    classConfig = data.classes;
+                    generateClassButtons();
+                })
+                .catch(error => {
+                    console.error('Error loading class configuration:', error);
+                    // Fallback to default configuration if loading fails
+                    classConfig = {
+                        "1": {"name": "Primy", "count": 2},
+                        "2": {"name": "Sekundy", "count": 3},
+                        "3": {"name": "Tercie", "count": 2},
+                        "4": {"name": "Kvarty", "count": 2},
+                        "5": {"name": "Kvinty", "count": 2},
+                        "6": {"name": "Sexty", "count": 2},
+                        "7": {"name": "Septimy", "count": 2},
+                        "8": {"name": "Oktávy", "count": 3}
+                    };
+                    generateClassButtons();
+                });
+        }
+
+        // Generate class buttons dynamically based on configuration
+        function generateClassButtons() {
+            const container = document.getElementById('classContainer');
+            container.innerHTML = '';
+
+            for (const [year, config] of Object.entries(classConfig)) {
+                const classGroup = document.createElement('div');
+                classGroup.className = 'class-group';
+
+                const title = document.createElement('h2');
+                title.textContent = config.name;
+                classGroup.appendChild(title);
+
+                const buttonsContainer = document.createElement('div');
+                buttonsContainer.className = config.count === 3 ? 'class-buttons' : 'class-buttons';
+                if (year === '8' && config.count === 3) {
+                    buttonsContainer.className = 'class-buttons-smaller';
+                }
+
+                // Generate buttons for each class (A, B, C, etc.)
+                const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
+                for (let i = 0; i < config.count; i++) {
+                    const button = document.createElement('button');
+                    const className = `${year}.${letters[i]}`;
+                    button.textContent = className;
+                    button.onclick = () => selectClass(className);
+                    
+                    if (config.count === 3 && year !== '8') {
+                        button.setAttribute('width', '30%');
+                    }
+                    
+                    buttonsContainer.appendChild(button);
+                }
+
+                classGroup.appendChild(buttonsContainer);
+                container.appendChild(classGroup);
+            }
+        }
+
+        // Load configuration when page loads
+        document.addEventListener('DOMContentLoaded', loadClassConfiguration);
 
         // Get the current page's URL
         const currentURL = window.location.href;

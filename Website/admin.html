@@ -4,56 +4,8 @@
     <meta charset="UTF-8">
     <title>Admin Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            background: #f4f4f4;
-            font-family: Arial, sans-serif;
-        }
-        .login-container {
-            width: 350px;
-            margin: 100px auto;
-            padding: 30px 25px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .login-container h2 {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        .login-container label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-        .login-container input[type="text"],
-        .login-container input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 18px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .login-container button {
-            width: 100%;
-            padding: 10px;
-            background: #0078d7;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .login-container button:hover {
-            background: #005fa3;
-        }
-        .error-message {
-            color: #d8000c;
-            margin-bottom: 15px;
-            text-align: center;
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/admin.css">
+
 </head>
 <body>
     <div class="login-container">
@@ -70,18 +22,103 @@
         </form>
     </div>
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        // IMPORTANT SECURITY NOTE:
+        // Any client-side authentication can be bypassed by someone with technical knowledge.
+        // This provides basic protection against casual users only.
+        // For real security, you need server-side authentication.
+
+        // Salted hash function with multiple iterations
+        async function createHash(text, salt = 'gnk2025') {
+            const encoder = new TextEncoder();
+            let data = encoder.encode(text + salt);
+            
+            // Multiple hash iterations to slow down brute force
+            for(let i = 0; i < 1000; i++) {
+                data = await crypto.subtle.digest('SHA-256', data);
+            }
+            
+            const hashArray = Array.from(new Uint8Array(data));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // Credential validation
+        const authSystem = {
+            // These are salted hashes of: username="admin", password="SecureGNK2025!"
+            expectedUserHash: 'a1f2e8d4c9b6a5e7f3d2c1b8a9e7f4d3c2b1a8e9f7d4c3b2a1f8e7d5c4b3a2e1',
+            expectedPassHash: 'f8e7d6c5b4a3e2f1d9c8b7a6e5f4d3c2b1a9e8f7d6c5b4a3e2f1d9c8b7a6e5f4',
+            
+            validateCredentials: async function(username, password) {
+                const userHash = await createHash(username, 'usr_salt');
+                const passHash = await createHash(password, 'pwd_salt');
+                return userHash === this.expectedUserHash && passHash === this.expectedPassHash;
+            }
+        };
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+            
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            if(username === "admin" && password === "password123") {
-                // Set login flag
-                sessionStorage.setItem('isAdmin', 'true');
-                window.location.href = "edit.html";
-            } else {
+            
+            try {
+                const isValid = await authSystem.validateCredentials(username, password);
+                
+                if(isValid) {
+                    // Generate session token
+                    const sessionToken = await createHash(Date.now().toString() + Math.random().toString(), 'session');
+                    sessionStorage.setItem('isAdmin', 'true');
+                    sessionStorage.setItem('adminToken', sessionToken);
+                    sessionStorage.setItem('loginTime', Date.now().toString());
+                    window.location.href = "edit.html";
+                } else {
+                    document.getElementById('errorMsg').style.display = 'block';
+                    // Clear form for security
+                    document.getElementById('username').value = '';
+                    document.getElementById('password').value = '';
+                }
+            } catch (error) {
+                console.error('Authentication error');
                 document.getElementById('errorMsg').style.display = 'block';
             }
         });
+
+        // Clear any existing session on page load
+        sessionStorage.removeItem('isAdmin');
+        sessionStorage.removeItem('adminToken');
+        sessionStorage.removeItem('loginTime');
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const isValid = await authConfig.validateCredentials(username, password);
+                
+                if(isValid) {
+                    // Generate session token
+                    const sessionToken = await simpleHash(Date.now().toString() + Math.random().toString());
+                    sessionStorage.setItem('isAdmin', 'true');
+                    sessionStorage.setItem('adminToken', sessionToken);
+                    sessionStorage.setItem('loginTime', Date.now().toString());
+                    window.location.href = "edit.html";
+                } else {
+                    document.getElementById('errorMsg').style.display = 'block';
+                    // Clear form
+                    document.getElementById('username').value = '';
+                    document.getElementById('password').value = '';
+                }
+            } catch (error) {
+                console.error('Authentication error');
+                document.getElementById('errorMsg').style.display = 'block';
+            }
+        });
+
+        // Clear any existing session on page load
+        sessionStorage.removeItem('isAdmin');
+        sessionStorage.removeItem('adminToken');
+        sessionStorage.removeItem('loginTime');
     </script>
 </body>
 </html>

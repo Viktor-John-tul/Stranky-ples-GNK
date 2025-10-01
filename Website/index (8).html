@@ -40,12 +40,82 @@
                     </p>
 
                     <!-- Buttons -->
-                    <div class="landing-buttons">
-                        <h3>Lístky je už možné koupit pouze na vrátnici nebo v Lucerně.</h3>
+                    <div class="landing-buttons" id="ticketSection">
+                        <!-- Content will be dynamically loaded -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        // Load content configuration and update page dynamically
+        fetch('content.json')
+            .then(response => response.json())
+            .then(data => {
+                // Update text content
+                const mainText = document.querySelector('.text p:first-of-type');
+                if (mainText && data.landing.mainText) {
+                    mainText.innerHTML = data.landing.mainText;
+                }
+
+                const detailsText = document.querySelector('.text p:nth-of-type(2)');
+                if (detailsText && data.landing.date && data.landing.place && data.landing.dresscode) {
+                    detailsText.innerHTML = `
+                        <strong>Kdy?</strong> ${data.landing.date}<br>
+                        <strong>Kde?</strong> ${data.landing.place}<br>
+                        <strong>Dress code:</strong> ${data.landing.dresscode}
+                    `;
+                }
+
+                // Update ticket section based on configuration
+                const ticketSection = document.getElementById('ticketSection');
+                const orderLink = document.getElementById('link2');
+                
+                if (data.landing.ticketOrderingEnabled) {
+                    // Show button and keep order link in dropdown
+                    ticketSection.innerHTML = '<a href="./Order.html" class="large-button">Objednat lístky</a>';
+                    if (orderLink) {
+                        orderLink.style.display = 'block';
+                    }
+                } else {
+                    // Show text only and hide order link in dropdown
+                    ticketSection.innerHTML = `<h3>${data.landing.ticketInfo}</h3>`;
+                    if (orderLink) {
+                        orderLink.style.display = 'none';
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error loading content:', error);
+                // Fallback content
+                const ticketSection = document.getElementById('ticketSection');
+                ticketSection.innerHTML = '<h3>Lístky je už možné koupit pouze na vrátnici nebo v Lucerně.</h3>';
+                
+                const orderLink = document.getElementById('link2');
+                if (orderLink) {
+                    orderLink.style.display = 'none';
+                }
+            });
+
+        // Get the current page's URL
+        const currentURL = window.location.href;
+
+        // Define the mapping of page names to their links
+        const pageLinks = {
+            "link1": "index.html",
+            "link2": "Order.html",
+            "external-link": "https://www.kavalirka.cz"
+        };
+
+        // Highlight the current page and disable the corresponding link
+        for (const [id, url] of Object.entries(pageLinks)) {
+            const link = document.getElementById(id);
+            if (link && currentURL.includes(url.split('/').pop())) {
+                link.classList.add("disabled");
+                break;
+            }
+        }
+    </script>
 </body>
 </html>
