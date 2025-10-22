@@ -1,14 +1,43 @@
 {
+  "//": "====================================================",
+  "_COMMENT": "📝 SOUBOR KDE LZE UPRAVIT TEXTY NA WEBU",
+  "//": "====================================================",
   "landing": {
+    "//": "--- TEXTY NA ÚVODNÍ STRÁNCE ---",
+    "_COMMENT_title": "🏷️ title - hlavní nadpis stránky",
+
+    "title": "Maturitní ples <br>Gymnázia Nad Kavalírkou",
+
+    "_COMMENT_mainText": "📝 mainText - text s pozváním na ples. Pokud chcete aby v textu byla pevná mezera (2 slova byla za sebou na stejné řádce), použijte &nbsp; (např. společně&nbsp;s&nbsp;námi napíše 'společně s námi' na stejné řádce)",
     "mainText": "Srdečně vás zveme na slavnostní večer plný elegance, radosti&nbsp;a&nbsp;nezapomenutelných okamžiků. Přijďte společně&nbsp;s&nbsp;námi oslavit náš významný životní milník. Těšit&nbsp;se&nbsp;můžete na&nbsp;bohatý program, skvělou hudbu&nbsp;a&nbsp;jedinečnou atmosféru.",
+    
+    "_COMMENT_date": "📅 date - datum a čas konání plesu",
     "date": "19. 2. 2025 v 19:00",
+    
+    "_COMMENT_place": "📍 place - místo konání plesu",
     "place": "Velký sál Lucerny",
+    
+    "_COMMENT_dresscode": "👗 dresscode - dress code pro ples",
     "dresscode": "Maska nebo doplněk ve stylu maškarního bálu (k zakoupení u vstupu)",
+    
+    "_COMMENT_ticketInfo": "ℹ️ ticketInfo - text který se zobrazí když je ticketOrderingEnabled false",
     "ticketInfo": "Lístky je už možné koupit pouze na vrátnici nebo v Lucerně.",
-    "ticketOrderingEnabled": false
+    
+    "_COMMENT_ticketOrdering": "🎫 ticketOrderingEnabled - true = zobrazí tlačítko pro objednání, false = zobrazí pouze text",
+    "ticketOrderingEnabled": true 
   },
+  "//": "--- CENY LÍSTKŮ ---",
+  "_COMMENT_pricing": "💰 pricing - konfigurace cen lístků",
+  "pricing": {
+    "_COMMENT_sitting": "🪑 sittingPrice - cena lístku na sezení v Kč",
+    "sittingPrice": 480,
+    "_COMMENT_standing": "🧍 standingPrice - cena lístku na stání v Kč", 
+    "standingPrice": 350
+  },
+  "//": "--- TŘÍDY A JEJICH POČTY ---",
+  "_COMMENT_classes": "🏫 classes - konfigurace tříd pro objednávkový formulář",
   "classes": {
-    "1": {"name": "Primy", "count": 2},
+    "1": {"name": "Primy", "count": 3},
     "2": {"name": "Sekundy", "count": 3},
     "3": {"name": "Tercie", "count": 2},
     "4": {"name": "Kvarty", "count": 2},

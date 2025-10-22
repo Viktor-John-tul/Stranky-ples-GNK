@@ -113,6 +113,24 @@
     </div>
 
     <script>
+        // Load content configuration to handle menu visibility
+        fetch('content.json')
+            .then(response => response.json())
+            .then(data => {
+                // Handle menu visibility based on ticketOrderingEnabled
+                const orderLink = document.getElementById('link2');
+                if (orderLink && data.landing && data.landing.ticketOrderingEnabled === false) {
+                    orderLink.style.display = 'none';
+                }
+            })
+            .catch(error => {
+                console.error('Error loading content configuration:', error);
+                // In case of error, hide the order link as a safe fallback
+                const orderLink = document.getElementById('link2');
+                if (orderLink) {
+                    orderLink.style.display = 'none';
+                }
+            });
 
         // Get the current page's URL
         const currentURL = window.location.href;

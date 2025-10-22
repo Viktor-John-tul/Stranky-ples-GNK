@@ -14,7 +14,6 @@
             <div class="web-dropdown-content">
                 <a href="index.html" id="link1">Informace</a>
                 <a href="Order.html" id="link2">Koupit lístky</a>
-                <a href="QRCodes.html" id="link3">QR kódy tříd</a>
                 <a href="https://www.kavalirka.cz" id="external-link">Stránky školy</a>
             </div>
         </div>
@@ -24,18 +23,17 @@
             <div class="text-and-poster">
                 <!-- Poster Section -->
                 <div class="poster">
-                    <img src="./Poster.jpeg" alt="Graduation Ball Poster">
+                    <img src="./images/plakat.png" alt="Graduation Ball Poster">
                 </div>
 
                 <!-- Text Section -->
                 <div class="text">
-                    <h1>Maturitní ples <br>Gymnázia Nad Kavalírkou</h1>
-                    <p>
-                        Srdečně vás zveme na slavnostní večer plný elegance, radosti&nbsp;a&nbsp;nezapomenutelných okamžiků. Přijďte společně&nbsp;s&nbsp;námi oslavit náš významný životní milník. Těšit&nbsp;se&nbsp;můžete na&nbsp;bohatý program, skvělou hudbu&nbsp;a&nbsp;jedinečnou atmosféru.
+                    <h1 id="pageTitle">Maturitní ples <br>Gymnázia Nad Kavalírkou</h1>
+                    <p id="mainText">
+                        <!-- Content will be dynamically loaded -->
                     </p>
-                    <p>
-                        <strong>Kdy?</strong> 19. 2. 2025 v 19:00<br>
-                        <strong>Kde?</strong> Velký sál Lucerna
+                    <p id="detailsText">
+                        <!-- Content will be dynamically loaded -->
                     </p>
 
                     <!-- Buttons -->
@@ -52,13 +50,20 @@
         fetch('content.json')
             .then(response => response.json())
             .then(data => {
-                // Update text content
-                const mainText = document.querySelector('.text p:first-of-type');
+                // Update title
+                const pageTitle = document.getElementById('pageTitle');
+                if (pageTitle && data.landing.title) {
+                    pageTitle.innerHTML = data.landing.title;
+                }
+
+                // Update main text content
+                const mainText = document.getElementById('mainText');
                 if (mainText && data.landing.mainText) {
                     mainText.innerHTML = data.landing.mainText;
                 }
 
-                const detailsText = document.querySelector('.text p:nth-of-type(2)');
+                // Update details text
+                const detailsText = document.getElementById('detailsText');
                 if (detailsText && data.landing.date && data.landing.place && data.landing.dresscode) {
                     detailsText.innerHTML = `
                         <strong>Kdy?</strong> ${data.landing.date}<br>
@@ -87,9 +92,33 @@
             })
             .catch(error => {
                 console.error('Error loading content:', error);
-                // Fallback - show button by default
+                // Fallback content
+                const pageTitle = document.getElementById('pageTitle');
+                if (pageTitle) {
+                    pageTitle.innerHTML = 'Maturitní ples <br>Gymnázia Nad Kavalírkou';
+                }
+
+                const mainText = document.getElementById('mainText');
+                if (mainText) {
+                    mainText.innerHTML = 'Srdečně vás zveme na slavnostní večer plný elegance, radosti a nezapomenutelných okamžiků.';
+                }
+
+                const detailsText = document.getElementById('detailsText');
+                if (detailsText) {
+                    detailsText.innerHTML = `
+                        <strong>Kdy?</strong> 19. 2. 2025 v 19:00<br>
+                        <strong>Kde?</strong> Velký sál Lucerny<br>
+                        <strong>Dress code:</strong> Maska nebo doplněk ve stylu maškarního bálu
+                    `;
+                }
+
                 const ticketSection = document.getElementById('ticketSection');
-                ticketSection.innerHTML = '<a href="./Order.html" class="large-button">Objednat lístky</a>';
+                ticketSection.innerHTML = '<h3>Lístky je už možné koupit pouze na vrátnici nebo v Lucerně.</h3>';
+                
+                const orderLink = document.getElementById('link2');
+                if (orderLink) {
+                    orderLink.style.display = 'none';
+                }
             });
 
         // Get the current page's URL
@@ -99,7 +128,6 @@
         const pageLinks = {
             "link1": "index.html",
             "link2": "Order.html",
-            "link3": "QRCodes.html",
             "external-link": "https://www.kavalirka.cz"
         };
 

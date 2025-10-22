@@ -119,20 +119,45 @@
         let selectedClass = null;
         let classConfig = null;
 
-        const sittingPrice = 480;
-        const standingPrice = 350;
+        // Pricing variables - will be loaded from content.json
+        let sittingPrice = 480; // default fallback
+        let standingPrice = 350; // default fallback
 
         // Load class configuration from content.json
         function loadClassConfiguration() {
             fetch('content.json')
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
                 .then(data => {
-                    classConfig = data.classes;
-                    generateClassButtons();
+                    if (data && data.classes) {
+                        classConfig = data.classes;
+                        console.log('✅ Successfully loaded class configuration from content.json:', classConfig);
+                        
+                        // Load pricing if available
+                        if (data.pricing) {
+                            sittingPrice = data.pricing.sittingPrice || 480;
+                            standingPrice = data.pricing.standingPrice || 350;
+                            console.log('✅ Loaded pricing - Sitting:', sittingPrice, 'Standing:', standingPrice);
+                        }
+                        
+                        generateClassButtons();
+                        
+                        // Handle menu visibility based on ticketOrderingEnabled
+                        const orderLink = document.getElementById('link2');
+                        if (orderLink && data.landing && data.landing.ticketOrderingEnabled === false) {
+                            orderLink.style.display = 'none';
+                        }
+                    } else {
+                        throw new Error('Invalid data structure in content.json');
+                    }
                 })
                 .catch(error => {
                     console.error('Error loading class configuration:', error);
-                    // Fallback to default configuration if loading fails
+                    // Fallback to default configuration if loading fails (matches content.json)
                     classConfig = {
                         "1": {"name": "Primy", "count": 2},
                         "2": {"name": "Sekundy", "count": 3},
@@ -144,6 +169,12 @@
                         "8": {"name": "Oktávy", "count": 3}
                     };
                     generateClassButtons();
+                    
+                    // In fallback, assume ordering might be disabled
+                    const orderLink = document.getElementById('link2');
+                    if (orderLink) {
+                        orderLink.style.display = 'none';
+                    }
                 });
         }
 
@@ -311,16 +342,18 @@
 
         function selectClass(className) {
             selectedClass = className;
-            if (selectedClass == "1.A" || selectedClass == "1.B" || selectedClass == "8.A" || selectedClass == "8.B" || selectedClass == "8.C") {
+            
+            // Show sitting tickets input for Prima (1st grade) and Oktáva (8th grade) students
+            if (selectedClass.startsWith("1.") || selectedClass.startsWith("8.")) {
                 document.getElementById('sittingInput').style.display = 'block';
+            } else {
+                document.getElementById('sittingInput').style.display = 'none';
             }
-            else{
-                document.getElementById('sittingInput').style.display = 'none'
-            }
+            
             document.getElementById('step2').classList.remove('active');
             document.getElementById('ticketsSitting').value = 0;
             document.getElementById('ticketsStanding').value = 0;
-            updatePrice()
+            updatePrice();
             document.getElementById('step3').classList.add('active');
         }
 
@@ -387,24 +420,50 @@
         }
 
         function SendToDatabse(timestamp, name, classname, collector, email, sitting, standing, price){
-            const data = {
-                VS: timestamp,
-                Name: name,
-                Class: classname,
-                Collector: collector,
-                Email: email,
-                Sitting: sitting,
-                Standing: standing,
-                Price: price
+            // Airtable configuration
+            const airtableApiKey = 'patq29sQiiE5ImJRW.7b336859c1a42961e9a63e429525bc49516131c764deb2650858e687f9f3a519';
+            const baseId = 'appUbsqZbU0PvrwS8';
+            const tableName = 'tblOLSQ2eJyW9WT3u';
+            
+            const airtableUrl = `https://api.airtable.com/v0/${baseId}/${tableName}`;
+            
+            const airtableData = {
+                fields: {
+                    "VS": Number(timestamp),
+                    "Name": String(name || ''),
+                    "Class": String(classname || ''),
+                    "Collector": String(collector || ''),
+                    "Email": String(email || ''),
+                    "Sitting": Number(sitting) || 0,
+                    "Standing": Number(standing) || 0,
+                    "Price": Number(price) || 0
+                }
             };
-
-            fetch("https://hook.eu2.make.com/pccuk6mvdxcj5h6btksxiyy2epbcifif", {
+            
+            fetch(airtableUrl, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${airtableApiKey}`,
+                    "Content-Type": "application/json"
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify(airtableData),
             })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(result => {
+                if (result.id) {
+                    console.log('✅ Order sent successfully. Record ID:', result.id);
+                } else {
+                    console.warn('⚠️ Unexpected response format');
+                }
+            })
+            .catch(error => {
+                console.error('❌ Error sending order:', error);
+            });
 
         }
 
