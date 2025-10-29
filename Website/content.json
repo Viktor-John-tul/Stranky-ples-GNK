@@ -34,6 +34,16 @@
     "_COMMENT_standing": "🧍 standingPrice - cena lístku na stání v Kč", 
     "standingPrice": 350
   },
+  "//": "--- BANKOVNÍ ÚČET PRO QR KÓDY ---",
+  "_COMMENT_bankAccount": "🏦 bankAccount - údaje bankovního účtu pro generování QR kódů k platbě",
+  "bankAccount": {
+    "_COMMENT_accountPrefix": "🔢 accountPrefix - předčíslí účtu (obvykle 000000)",
+    "accountPrefix": "000000",
+    "_COMMENT_accountNumber": "🏧 accountNumber - číslo bankovního účtu",
+    "accountNumber": "0000306069",
+    "_COMMENT_bankCode": "🏛️ bankCode - kód banky",
+    "bankCode": "5500"
+  },
   "//": "--- AIRTABLE KONFIGURACE ---",
   "_COMMENT_airtable": "🗄️ airtable - konfigurace pro připojení k Airtable databázi",
   "airtable": {

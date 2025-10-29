@@ -525,28 +525,58 @@
         }
 
         function generateQRCode(timestamp,Name, classname, collector, sitting, standing, totalPrice, Email) {
+            // Load bank account configuration from content.json
+            fetch('content.json')
+                .then(response => response.json())
+                .then(config => {
+                    const bankConfig = config.bankAccount || {};
+                    const accountPrefix = bankConfig.accountPrefix || '000000';
+                    const accountNumber = bankConfig.accountNumber || '0000306069';
+                    const bankCode = bankConfig.bankCode || '5500';
+                    
+                    console.log('🏦 Using bank config from content.json:', { accountNumber, bankCode });
+                    
+                    // Collect values from input fields
+                    const name = Name;
+                    const className = classname;
+                    const Collector = collector;
+                    const Sitting = sitting;
+                    const Standing = standing;
+                    const price = totalPrice;
+                    const email = Email;
+                    const selectedOptionText = selectedOption === 'schoolmate' ? "škola" : "mimo";
 
-            // Collect values from input fields
-            const name = Name;
-            className = classname;
-            Collector = collector;
-            const Sitting = sitting;
-            const Standing = standing;
-            const price = totalPrice;
-            const email = Email;
-            selectedOption = selectedOption === 'schoolmate' ? "škola" : "mimo"
+                    // Combine data into a single string
+                    const msg = `${name}, ${selectedOptionText}, ${className}, ${Collector}, ${Sitting}, ${Standing}`;
 
-            // Combine data into a single string
-            const msg = `${name}, ${selectedOption}, ${className}, ${Collector}, ${Sitting}, ${Standing}`;
-            const qrData = `SPD*1.0*ACC:CZ4662106701002215199837*AM:${price}*CC:CZK*MSG:${msg}`;
+                    const imgElement = document.getElementById('qrcode');
+                    const generatedImageUrl = `https://api.paylibo.com/paylibo/generator/czech/image?accountPrefix=${accountPrefix}&accountNumber=${accountNumber}&bankCode=${bankCode}&vs=${timestamp}&amount=${price}&currency=CZK&message=${msg}&size=300`;
 
-            const imgElement = document.getElementById('qrcode');
-            const generatedImageUrl = `https://api.paylibo.com/paylibo/generator/czech/image?accountPrefix=000000&accountNumber=0000306069&bankCode=5500&vs=${timestamp}&amount=${price}&currency=CZK&message=${msg}&size=300`
+                    // Set the src attribute of the image element
+                    imgElement.src = generatedImageUrl;
 
-            // Set the src attribute of the image element
-            imgElement.src = generatedImageUrl;
+                    document.getElementById('popup3').classList.add('active');
+                })
+                .catch(error => {
+                    console.error('❌ Error loading bank config:', error);
+                    console.log('⚠️ Falling back to hardcoded bank config');
+                    
+                    // Fallback to hardcoded values
+                    const name = Name;
+                    const className = classname;
+                    const Collector = collector;
+                    const Sitting = sitting;
+                    const Standing = standing;
+                    const price = totalPrice;
+                    const selectedOptionText = selectedOption === 'schoolmate' ? "škola" : "mimo";
 
-            document.getElementById('popup3').classList.add('active');
+                    const msg = `${name}, ${selectedOptionText}, ${className}, ${Collector}, ${Sitting}, ${Standing}`;
+                    const imgElement = document.getElementById('qrcode');
+                    const generatedImageUrl = `https://api.paylibo.com/paylibo/generator/czech/image?accountPrefix=000000&accountNumber=0000306069&bankCode=5500&vs=${timestamp}&amount=${price}&currency=CZK&message=${msg}&size=300`;
+
+                    imgElement.src = generatedImageUrl;
+                    document.getElementById('popup3').classList.add('active');
+                });
         }
     </script>
 </body>
