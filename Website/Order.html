@@ -420,11 +420,69 @@
         }
 
         function SendToDatabse(timestamp, name, classname, collector, email, sitting, standing, price){
-            // Airtable configuration
+            // Load Airtable configuration from content.json
+            fetch('content.json')
+                .then(response => response.json())
+                .then(config => {
+                    const airtableConfig = config.airtable || {};
+                    const airtableApiKey = airtableConfig.apiKey;
+                    const baseId = airtableConfig.baseId ;
+                    const tableName = airtableConfig.tableName;
+                    
+                    console.log('🔧 Using Airtable config from content.json:', { baseId, tableName });
+                    
+                    const airtableUrl = `https://api.airtable.com/v0/${baseId}/${tableName}`;
+                    
+                    const airtableData = {
+                        fields: {
+                            "VS": Number(timestamp),
+                            "Name": String(name || ''),
+                            "Class": String(classname || ''),
+                            "Collector": String(collector || ''),
+                            "Email": String(email || ''),
+                            "Sitting": Number(sitting) || 0,
+                            "Standing": Number(standing) || 0,
+                            "Price": Number(price) || 0
+                        }
+                    };
+                    
+                    return fetch(airtableUrl, {
+                        method: "POST",
+                        headers: {
+                            "Authorization": `Bearer ${airtableApiKey}`,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(airtableData),
+                    });
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    if (result.id) {
+                        console.log('✅ Order sent successfully. Record ID:', result.id);
+                    } else {
+                        console.warn('⚠️ Unexpected response format');
+                    }
+                })
+                .catch(error => {
+                    console.error('❌ Error sending order:', error);
+                    // Fallback: try with hardcoded values if config loading fails
+                    if (error.message.includes('content.json')) {
+                        console.log('⚠️ Falling back to hardcoded Airtable config');
+                        sendToAirtableWithHardcodedConfig(timestamp, name, classname, collector, email, sitting, standing, price);
+                    }
+                });
+        }
+
+        // Fallback function with hardcoded values
+        function sendToAirtableWithHardcodedConfig(timestamp, name, classname, collector, email, sitting, standing, price) {
             const airtableApiKey = 'patq29sQiiE5ImJRW.7b336859c1a42961e9a63e429525bc49516131c764deb2650858e687f9f3a519';
             const baseId = 'appUbsqZbU0PvrwS8';
             const tableName = 'tblOLSQ2eJyW9WT3u';
-            
             const airtableUrl = `https://api.airtable.com/v0/${baseId}/${tableName}`;
             
             const airtableData = {
@@ -456,15 +514,14 @@
             })
             .then(result => {
                 if (result.id) {
-                    console.log('✅ Order sent successfully. Record ID:', result.id);
+                    console.log('✅ Order sent successfully (fallback). Record ID:', result.id);
                 } else {
-                    console.warn('⚠️ Unexpected response format');
+                    console.warn('⚠️ Unexpected response format (fallback)');
                 }
             })
             .catch(error => {
-                console.error('❌ Error sending order:', error);
+                console.error('❌ Error sending order (fallback):', error);
             });
-
         }
 
         function generateQRCode(timestamp,Name, classname, collector, sitting, standing, totalPrice, Email) {
