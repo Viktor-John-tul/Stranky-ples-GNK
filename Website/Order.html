@@ -24,18 +24,18 @@
         <button class="big-button" onclick="Continue()">Pokračovat</button>
     </div>
 
-    <div class="step" id="step1">
+    <!-- <div class="step" id="step1">
         <h1>Kdo bude lístky vyzvedávat?</h1>
         <button class="big-button" onclick="selectOption('schoolmate')">Osoba studující na GNK</button>
         <button class="big-button" onclick="selectOption('notSchoolmate')">Osoba nestudující na GNK</button>
-    </div>
+    </div> -->
 
     <div class="step" id="step2">
         <h1>Vyberte třídu</h1>
         <div class="scrollable-list" id="classContainer">
             <!-- Classes will be dynamically generated here -->
         </div>
-        <button class="medium-button" onclick="goBack1()">Zpět</button>
+        <!-- <button class="medium-button" onclick="goBack1()">Zpět</button> -->
     </div>
 
     <div class="step" id="step3">
@@ -57,12 +57,12 @@
             </div>
 
             <div class="input-group" id="sittingInput" style="display: none;">
-                <label for="ticketsSitting">Lístky na sezení<br>(vyprodáno, je možné platit pouze za rezervované)</label>
+                <label for="ticketsSitting">Lístky na sezení v 1. řadě</label>
                 <input type="number" id="ticketsSitting" placeholder="Pouze rezervované lístky" value="0" min="0" onchange="updatePrice()">
             </div>
 
             <div class="input-group">
-                <label for="ticketsStanding">Lístky na stání</label>
+                <label for="ticketsStanding">Lístky na sezení ve 2. řadě</label>
                 <input type="number" id="ticketsStanding" value="0" min="0" onchange="updatePrice()">
             </div>
 
@@ -80,8 +80,8 @@
                 <p><strong>E-mail:</strong> <span id="email">[Email]</span></p>
                 <p><strong>Třída:</strong> <span id="class">[Email]</span></p>
                 <p><strong>Osoba vyzvedávající lístky:</strong> <span id="collector1">[Info]</span></p>
-                <p><strong>Počet lístků na sezení:</strong> <span id="sitting">[Email]</span></p>
-                <p><strong>Počet lístků na stání:</strong> <span id="standing">[Email]</span></p>
+                <p><strong>Počet lístků na sezení v 1. řadě:</strong> <span id="sitting">[Email]</span></p>
+                <p><strong>Počet lístků na sezení ve 2. řadě:</strong> <span id="standing">[Email]</span></p>
                 <p><strong>Celková cena:</strong> <span id="price">[Email]</span></p>
             </div>
             <div class="popup-buttons">
@@ -159,14 +159,14 @@
                     console.error('Error loading class configuration:', error);
                     // Fallback to default configuration if loading fails (matches content.json)
                     classConfig = {
-                        "1": {"name": "Primy", "count": 2},
+                        "1": {"name": "Primy", "count": 3},
                         "2": {"name": "Sekundy", "count": 3},
                         "3": {"name": "Tercie", "count": 2},
                         "4": {"name": "Kvarty", "count": 2},
                         "5": {"name": "Kvinty", "count": 2},
                         "6": {"name": "Sexty", "count": 2},
                         "7": {"name": "Septimy", "count": 2},
-                        "8": {"name": "Oktávy", "count": 3}
+                        "8": {"name": "Oktávy", "count": 2}
                     };
                     generateClassButtons();
                     
@@ -240,8 +240,10 @@
         }
 
         function Continue(){
+            selectedOption = 'schoolmate'; // Set default since step1 is skipped
             document.getElementById('step0').style.display = 'none';
-            document.getElementById('step1').classList.add('active');
+            document.getElementById('step2').classList.add('active');
+            document.getElementById('collectorInput').style.display = 'block';
         }
         // Function to open the popup
         function openPopup() {

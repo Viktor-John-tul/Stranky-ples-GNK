@@ -31,7 +31,7 @@
   "pricing": {
     "_COMMENT_sitting": "🪑 sittingPrice - cena lístku na sezení v Kč",
     "sittingPrice": 480,
-    "_COMMENT_standing": "🧍 standingPrice - cena lístku na stání v Kč", 
+    "_COMMENT_standing": "🧍 standingPrice - cena lístku na sezení ve 2. řadě v Kč",
     "standingPrice": 350
   },
   "//": "--- BANKOVNÍ ÚČET PRO QR KÓDY ---",
@@ -57,13 +57,7 @@
   "//": "--- TŘÍDY A JEJICH POČTY ---",
   "_COMMENT_classes": "🏫 classes - konfigurace tříd pro objednávkový formulář",
   "classes": {
-    "1": {"name": "Primy", "count": 2},
-    "2": {"name": "Sekundy", "count": 3},
-    "3": {"name": "Tercie", "count": 2},
-    "4": {"name": "Kvarty", "count": 2},
-    "5": {"name": "Kvinty", "count": 2},
-    "6": {"name": "Sexty", "count": 2},
-    "7": {"name": "Septimy", "count": 2},
-    "8": {"name": "Oktávy", "count": 3}
+    "1": {"name": "Primy", "count": 3},
+    "8": {"name": "Oktávy", "count": 2}
   }
 }
