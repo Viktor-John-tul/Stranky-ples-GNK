@@ -9,16 +9,16 @@
     "title": "Maturitní ples <br>Gymnázia Nad Kavalírkou",
 
     "_COMMENT_mainText": "📝 mainText - text s pozváním na ples. Pokud chcete aby v textu byla pevná mezera (2 slova byla za sebou na stejné řádce), použijte &nbsp; (např. společně&nbsp;s&nbsp;námi napíše 'společně s námi' na stejné řádce)",
-    "mainText": "",
+    "mainText": "Srdečně Vás zveme na náš ples! <br> 🪄🎰🎩 <br> Přijďte si užít nezapomenutelný večer plný tance, skvělé hudby,<br> zábavy a slavnostní atmosféry. <br> Těšíme se na Vaši účast!",
     
     "_COMMENT_date": "📅 date - datum a čas konání plesu",
-    "date": "",
+    "date": "25. 2. 2026 od 19:00",
     
     "_COMMENT_place": "📍 place - místo konání plesu",
-    "place": "",
+    "place": "Velký sál Lucerna",
     
     "_COMMENT_dresscode": "👗 dresscode - dress code pro ples",
-    "dresscode": "",
+    "dresscode": "a",
     
     "_COMMENT_ticketInfo": "ℹ️ ticketInfo - text který se zobrazí když je ticketOrderingEnabled false",
     "ticketInfo": "",
@@ -30,9 +30,9 @@
   "_COMMENT_pricing": "💰 pricing - konfigurace cen lístků",
   "pricing": {
     "_COMMENT_sitting": "🪑 sittingPrice - cena lístku na sezení v Kč",
-    "sittingPrice": 480,
+    "sittingPrice": 500,
     "_COMMENT_standing": "🧍 standingPrice - cena lístku na sezení ve 2. řadě v Kč",
-    "standingPrice": 350
+    "standingPrice": 400
   },
   "//": "--- BANKOVNÍ ÚČET PRO QR KÓDY ---",
   "_COMMENT_bankAccount": "🏦 bankAccount - údaje bankovního účtu pro generování QR kódů k platbě",
@@ -48,11 +48,11 @@
   "_COMMENT_airtable": "🗄️ airtable - konfigurace pro připojení k Airtable databázi",
   "airtable": {
     "_COMMENT_apiKey": "🔑 apiKey - Personal Access Token z Airtable (začíná 'pat')",
-    "apiKey": "",
+    "apiKey": "pat4KJjry6UIAbfFK.f7d509f49d105ec98b40911f599c07161f0207f6785c267ebb4c5792313da88d",
     "_COMMENT_baseId": "🗂️ baseId - ID Airtable base (začíná 'app')",
-    "baseId": "",
+    "baseId": "appuLW8iJnrOFpRxv",
     "_COMMENT_tableName": "📋 tableName - ID nebo název tabulky (začíná 'tbl' nebo název tabulky)",
-    "tableName": ""
+    "tableName": "tblK1swCUBWbYwBLz"
   },
   "//": "--- TŘÍDY A JEJICH POČTY ---",
   "_COMMENT_classes": "🏫 classes - konfigurace tříd pro objednávkový formulář",
@@ -61,3 +61,4 @@
     "8": {"name": "Oktávy", "count": 2}
   }
 }
+

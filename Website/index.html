@@ -23,7 +23,7 @@
             <div class="text-and-poster">
                 <!-- Poster Section -->
                 <div class="poster">
-                    <img src="./images/plakat.png" alt="Graduation Ball Poster">
+                    <img src="./images/Poster.jpeg" alt="Graduation Ball Poster">
                 </div>
 
                 <!-- Text Section -->
@@ -64,11 +64,10 @@
 
                 // Update details text
                 const detailsText = document.getElementById('detailsText');
-                if (detailsText && data.landing.date && data.landing.place && data.landing.dresscode) {
+                if (detailsText && data.landing.date && data.landing.place) {
                     detailsText.innerHTML = `
                         <strong>Kdy?</strong> ${data.landing.date}<br>
                         <strong>Kde?</strong> ${data.landing.place}<br>
-                        <strong>Dress code:</strong> ${data.landing.dresscode}
                     `;
                 }
 
