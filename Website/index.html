@@ -105,19 +105,34 @@
                 const detailsText = document.getElementById('detailsText');
                 if (detailsText) {
                     detailsText.innerHTML = `
-                        <strong>Kdy?</strong> 19. 2. 2025 v 19:00<br>
+                        <strong>Kdy?</strong> 25. 2. 2026 v 19:00<br>
                         <strong>Kde?</strong> Velký sál Lucerny<br>
-                        <strong>Dress code:</strong> Maska nebo doplněk ve stylu maškarního bálu
                     `;
                 }
 
+                // Update ticket section based on configuration
                 const ticketSection = document.getElementById('ticketSection');
-                ticketSection.innerHTML = '<h3>Lístky je už možné koupit pouze na vrátnici nebo v Lucerně.</h3>';
-                
                 const orderLink = document.getElementById('link2');
-                if (orderLink) {
-                    orderLink.style.display = 'none';
+                
+                if (data.landing.ticketOrderingEnabled) {
+                    // Show button and keep order link in dropdown
+                    ticketSection.innerHTML = '<a href="./Order.html" class="large-button">Objednat lístky</a>';
+                    if (orderLink) {
+                        orderLink.style.display = 'block';
+                    }
+                } else {
+                    // Show text only and hide order link in dropdown
+                    ticketSection.innerHTML = `<h3>${data.landing.ticketInfo}</h3>`;
+                    if (orderLink) {
+                        orderLink.style.display = 'none';
+                    }
                 }
+            })
+            .catch(error => {
+                console.error('Error loading content:', error);
+                // Fallback - show button by default
+                const ticketSection = document.getElementById('ticketSection');
+                ticketSection.innerHTML = '<a href="./Order.html" class="large-button">Objednat lístky</a>';
             });
 
         // Get the current page's URL
@@ -127,6 +142,7 @@
         const pageLinks = {
             "link1": "index.html",
             "link2": "Order.html",
+            "link3": "QRCodes.html",
             "external-link": "https://www.kavalirka.cz"
         };
 

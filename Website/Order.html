@@ -35,7 +35,7 @@
         <div class="scrollable-list" id="classContainer">
             <!-- Classes will be dynamically generated here -->
         </div>
-        <!-- <button class="medium-button" onclick="goBack1()">Zpět</button> -->
+        <button class="medium-button" onclick="goBack1()">Zpět</button>
     </div>
 
     <div class="step" id="step3">
@@ -160,12 +160,6 @@
                     // Fallback to default configuration if loading fails (matches content.json)
                     classConfig = {
                         "1": {"name": "Primy", "count": 3},
-                        "2": {"name": "Sekundy", "count": 3},
-                        "3": {"name": "Tercie", "count": 2},
-                        "4": {"name": "Kvarty", "count": 2},
-                        "5": {"name": "Kvinty", "count": 2},
-                        "6": {"name": "Sexty", "count": 2},
-                        "7": {"name": "Septimy", "count": 2},
                         "8": {"name": "Oktávy", "count": 2}
                     };
                     generateClassButtons();
@@ -307,20 +301,12 @@
         }
 
         function goBack1(){
-            document.getElementById('step2').classList.remove('active');
-            document.getElementById('step1').classList.add('active');
+            window.location.href = "index.html";
         }
 
         function goBack2(){
-            selectedOption = selectedOption === 'schoolmate' ? 'Yes' : 'No';
             document.getElementById('step3').classList.remove('active');
-
-            if (selectedOption === 'yes') {
-                document.getElementById('step2').classList.add('active');
-            }
-            else{
-                document.getElementById('step1').classList.add('active');
-            }
+            document.getElementById('step2').classList.add('active');
         }
 
         function selectOption(option) {
